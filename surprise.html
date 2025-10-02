@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Surprise Gift 🎁</title>
+  <style>
+    /* --- Background --- */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Poppins", sans-serif;
+      background: radial-gradient(circle at center, #1a1a1a, #000);
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* --- Card --- */
+    .card {
+      background: rgba(20, 20, 20, 0.9);
+      border: 1px solid rgba(255, 215, 0, 0.4);
+      border-radius: 18px;
+      padding: 30px;
+      max-width: 600px;
+      width: 90%;
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
+      z-index: 2;
+      position: relative;
+    }
+
+    h1 span {
+      color: gold;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+    }
+
+    /* --- Gift Box --- */
+    .gift-box {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 20px auto;
+      cursor: pointer;
+    }
+    .lid {
+      width: 120px;
+      height: 40px;
+      background: linear-gradient(145deg, gold, #f5c542);
+      border-radius: 6px;
+      position: absolute;
+      top: -40px;
+      left: 0;
+      transform-origin: center;
+      transition: transform 0.8s ease;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+    .box {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(145deg, #2b2b2b, #1a1a1a);
+      border-radius: 10px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      border: 2px solid gold;
+    }
+    .ribbon {
+      width: 20px;
+      height: 120px;
+      background: gold;
+      position: absolute;
+      left: 50px;
+      top: 0;
+      border-radius: 6px;
+    }
+    .open .lid {
+      transform: rotate(-25deg) translateY(-70px);
+    }
+
+    /* --- Message --- */
+    .message {
+      font-size: 1.4rem;
+      margin-top: 20px;
+      color: gold;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .message.visible {
+      opacity: 1;
+    }
+    #finalMsg {
+      font-size: 1.3rem;
+      white-space: pre-wrap;
+      border-right: 3px solid gold;
+      display: inline-block;
+      margin-top: 20px;
+    }
+    #finalMsg.done {
+      border-right: none;
+    }
+
+    /* --- Buttons --- */
+    button {
+      padding: 12px 20px;
+      margin: 10px 6px;
+      border: none;
+      border-radius: 10px;
+      background: gold;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 15px gold;
+    }
+
+    /* --- Music Button --- */
+    .music-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: gold;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+      z-index: 3;
+    }
+
+    /* --- Confetti Canvas --- */
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Hey, <span>Welcome!</span> ✨</h1>
+
+    <div id="giftWrapper">
+      <div class="gift-box" id="giftBox">
+        <div class="lid"></div>
+        <div class="box"></div>
+        <div class="ribbon"></div>
+      </div>
+    </div>
+
+    <button id="giftBtn">Open Your Gift 🎁</button>
+
+    <p class="message hidden" id="yay">🎊 The surprise awaits...</p>
+    <button id="revealBtn" class="hidden">Reveal Message ✨</button>
+
+    <p class="message hidden" id="finalMsg"></p>
+    <button id="customizeBtn" class="hidden">✏️ Edit & Share</button>
+  </div>
+
+  <div class="card hidden" id="customizeBox">
+    <h2 style="color:gold;">Edit Your Message 💌</h2>
+    <textarea id="customMsg" placeholder="Write your message..."></textarea>
+    <br>
+    <button id="copyBtn">📋 Copy Link</button>
+    <p id="copied" class="hidden" style="color:lightgreen;">✅ Link copied!</p>
+  </div>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confetti"></canvas>
+
+  <!-- Music -->
+  <button id="musicToggle" class="music-btn hidden">🎶</button>
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2023/02/28/audio_9f71db2c9a.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const giftBtn = document.getElementById('giftBtn');
+    const giftBox = document.getElementById('giftBox');
+    const yay = document.getElementById('yay');
+    const revealBtn = document.getElementById('revealBtn');
+    const finalMsg = document.getElementById('finalMsg');
+    const customizeBtn = document.getElementById('customizeBtn');
+    const customizeBox = document.getElementById('customizeBox');
+    const customMsg = document.getElementById('customMsg');
+    const copyBtn = document.getElementById('copyBtn');
+    const copied = document.getElementById('copied');
+    const musicToggle = document.getElementById('musicToggle');
+    const bgMusic = document.getElementById('bgMusic');
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Confetti setup
+    const confettiPieces = [];
+    function Confetti() {
+      this.x = Math.random() * canvas.width;
+      this.y = canvas.height;
+      this.size = Math.random() * 6 + 4;
+      this.speedY = Math.random() * -3 - 2;
+      this.speedX = (Math.random() - 0.5) * 3;
+      this.color = Math.random() > 0.5 ? "gold" : "silver";
+    }
+    Confetti.prototype.update = function() {
+      this.x += this.speedX;
+      this.y += this.speedY;
+    };
+    Confetti.prototype.draw = function() {
+      ctx.fillStyle = this.color;
+      ctx.fillRect(this.x, this.y, this.size, this.size);
+    };
+
+    function createConfetti(n = 100) {
+      confettiPieces.length = 0;
+      for (let i = 0; i < n; i++) confettiPieces.push(new Confetti());
+    }
+    function animateConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confettiPieces.forEach((p) => { p.update(); p.draw(); });
+      requestAnimationFrame(animateConfetti);
+    }
+
+    // Typewriter
+    function typeWriterEffect(text, element, speed = 40, onComplete) {
+      element.textContent = "";
+      let i = 0;
+      function step() {
+        if (i < text.length) {
+          element.textContent += text.charAt(i++);
+          setTimeout(step, speed);
+        } else {
+          element.classList.add("done");
+          if (onComplete) onComplete();
+        }
+      }
+      step();
+    }
+
+    // Default/custom message
+    const urlParam = new URLSearchParams(window.location.search);
+    let customText = urlParam.get("msg");
+    customText = customText ? decodeURIComponent(customText) : "💎 You are rare, precious, and truly amazing. ✨";
+
+    // Handlers
+    giftBtn.addEventListener("click", () => {
+      giftBox.classList.add("open");
+      giftBtn.style.display = "none";
+      yay.classList.remove("hidden");
+      revealBtn.classList.remove("hidden");
+    });
+
+    revealBtn.addEventListener("click", () => {
+      revealBtn.style.display = "none";
+      finalMsg.classList.remove("hidden");
+      typeWriterEffect(customText, finalMsg, 50, () => {
+        customizeBtn.classList.remove("hidden");
+      });
+      createConfetti();
+      animateConfetti();
+      musicToggle.classList.remove("hidden");
+      bgMusic.play().catch(()=>{});
+    });
+
+    customizeBtn.addEventListener("click", () => {
+      customizeBox.classList.toggle("hidden");
+      customMsg.value = finalMsg.textContent;
+    });
+
+    copyBtn.addEventListener("click", async () => {
+      const baseUrl = window.location.origin + window.location.pathname;
+      const encoded = encodeURIComponent(customMsg.value || customText);
+      const link = `${baseUrl}?msg=${encoded}`;
+      await navigator.clipboard.writeText(link);
+      copied.classList.remove("hidden");
+      setTimeout(()=> copied.classList.add("hidden"), 3000);
+    });
+
+    musicToggle.addEventListener("click", () => {
+      if (bgMusic.paused) {
+        bgMusic.play();
+        musicToggle.textContent = "⏸";
+      } else {
+        bgMusic.pause();
+        musicToggle.textContent = "🎶";
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>

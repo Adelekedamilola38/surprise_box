@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Surprise Gift 🎁</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="card">
+    <h1 id="welcome">Hey, <span>Welcome!</span> 🎉</h1>
+
+    <!-- Gift Box -->
+    <div id="giftWrapper">
+      <div class="gift-box">
+        <div class="lid"></div>
+        <div class="box"></div>
+        <div class="ribbon"></div>
+      </div>
+    </div>
+
+    <button id="giftBtn">Open Your Gift 🎁</button>
+
+    <p class="message hidden" id="yay">Yay! 🎊 You found the surprise!</p>
+    <button id="revealBtn" class="hidden">Reveal Message ✨</button>
+
+    <p class="message hidden" id="finalMsg"></p>
+    <button id="customizeBtn" class="hidden">✏️ Edit & Share</button>
+  </div>
+
+  <!-- Balloons -->
+  <div id="balloons"></div>
+
+  <!-- Customize Box -->
+  <div class="card hidden" id="customizeBox">
+    <h2>Edit Your Message 💌</h2>
+    <textarea id="customMsg"></textarea>
+    <button id="copyBtn">📋 Copy Link</button>
+    <button id="shareWhatsApp">💬 WhatsApp</button>
+    <button id="shareTwitter">🐦 Twitter</button>
+    <p id="copied" class="hidden">✅ Link copied! Share it with your loved ones 💖</p>
+  </div>
+
+  <!-- Confetti -->
+  <canvas id="confetti"></canvas>
+
+  <!-- Background Music -->
+  <button id="musicToggle" class="music-btn hidden">🎶 Play</button>
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/audio/2023/07/11/audio_3f0e6f838b.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+
+  <script src="scripts.js"></script>
+</body>
+</html>

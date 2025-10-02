@@ -1,0 +1,170 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  margin: 0;
+  padding: 30px;
+  overflow-x: hidden;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  margin: 20px auto;
+  width: 90%;
+  max-width: 500px;
+}
+
+/* Gift Box */
+.gift-box {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 80px auto 20px;
+  animation: bounce 1.5s infinite;
+}
+.lid {
+  width: 100px;
+  height: 30px;
+  background: #ff4081;
+  border-radius: 5px;
+  position: absolute;
+  top: -30px;
+  transition: transform 0.8s ease;
+}
+.box {
+  width: 100px;
+  height: 100px;
+  background: #ff6f91;
+  border-radius: 8px;
+}
+.ribbon {
+  width: 20px;
+  height: 100px;
+  background: white;
+  position: absolute;
+  left: 40px;
+  top: 0;
+  border-radius: 5px;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.open .lid {
+  transform: rotate(-25deg) translateY(-60px);
+}
+
+/* Messages */
+.hidden { display: none; }
+.message {
+  font-size: 1.4rem;
+  margin-top: 20px;
+  color: #ff4081;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+}
+.show { opacity: 1; }
+
+/* Typewriter Effect */
+#finalMsg {
+  border-right: 3px solid #ff4081;
+  white-space: nowrap;
+  overflow: hidden;
+  display: inline-block;
+  animation: typing 3s steps(40, end), blink .75s step-end infinite;
+}
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+@keyframes blink {
+  50% { border-color: transparent }
+}
+
+/* Balloons */
+#balloons {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  pointer-events: none;
+}
+.balloon {
+  width: 40px;
+  height: 60px;
+  background: #ff4081;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  position: absolute;
+  animation: float 8s linear infinite;
+}
+@keyframes float {
+  from { transform: translateY(100vh) }
+  to { transform: translateY(-120vh) }
+}
+
+/* Buttons */
+button {
+  padding: 12px 24px;
+  font-size: 1.1em;
+  background: #ff4081;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  margin: 8px;
+}
+button:hover {
+  transform: scale(1.05);
+}
+
+textarea {
+  width: 90%;
+  height: 100px;
+  margin: 10px;
+  padding: 10px;
+  font-size: 1em;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+/* Floating Music Button */
+.music-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #ff6f91;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 1.5rem;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+#shareWhatsApp {
+  background: #25D366; /* WhatsApp green */
+}
+#shareTwitter {
+  background: #1DA1F2; /* Twitter blue */
+}
+#shareWhatsApp:hover {
+  box-shadow: 0 4px 15px rgba(37, 211, 102, 0.6);
+}
+#shareTwitter:hover {
+  box-shadow: 0 4px 15px rgba(29, 161, 242, 0.6);
+}
