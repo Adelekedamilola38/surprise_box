@@ -16,24 +16,27 @@ body {
 }
 
 .card {
-  max-width: 400px;   /* or whatever width you like */
-  margin: auto;       /* center the card */
+  max-width: 400px;
+  margin: 20px auto;
   padding: 20px;
   border-radius: 15px;
-  background: white;
+  background: #fff;
   box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-
-  /* Important for text wrapping */
-  overflow-wrap: break-word; /* ensures long words/links break */
-  word-wrap: break-word;     /* older support */
-  word-break: break-word;    /* fallback */
+  
+  /* Prevent overflow */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
 }
 
 .card .message {
   font-size: 1rem;
   line-height: 1.5;
   text-align: center;
+  margin: 15px 0;
 }
+
+
 
 
 /* Gift Box */
