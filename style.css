@@ -16,15 +16,25 @@ body {
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px);
-  border-radius: 20px;
-  padding: 25px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-  margin: 20px auto;
-  width: 90%;
-  max-width: 500px;
+  max-width: 400px;   /* or whatever width you like */
+  margin: auto;       /* center the card */
+  padding: 20px;
+  border-radius: 15px;
+  background: white;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+
+  /* Important for text wrapping */
+  overflow-wrap: break-word; /* ensures long words/links break */
+  word-wrap: break-word;     /* older support */
+  word-break: break-word;    /* fallback */
 }
+
+.card .message {
+  font-size: 1rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
 
 /* Gift Box */
 .gift-box {

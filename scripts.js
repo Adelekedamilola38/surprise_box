@@ -70,7 +70,7 @@ function animateConfetti() {
 const urlParam = new URLSearchParams(window.location.search);
 let customText = urlParam.get("msg");
 if (!customText) {
-  customText = "💖 You are beautiful, strong, <br>and you've got this! 💖";
+  customText = "💖 You are beautiful, strong, and you've got this! 💖";
 } else {
   customText = decodeURIComponent(customText);
 }
@@ -83,7 +83,7 @@ giftBtn.addEventListener("click", () => {
 
 revealBtn.addEventListener("click", () => {
   revealBtn.style.display = "none";
-  finalMsg.innerHTML = customText;
+  finalMsg.innerText = customText;
   finalMsg.classList.remove("hidden");
   setTimeout(() => finalMsg.classList.add("show"), 100);
   createConfetti();
