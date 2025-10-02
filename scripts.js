@@ -83,7 +83,7 @@ giftBtn.addEventListener("click", () => {
 
 revealBtn.addEventListener("click", () => {
   revealBtn.style.display = "none";
-  finalMsg.innerText = customText;
+  finalMsg.innerHTML = customText;
   finalMsg.classList.remove("hidden");
   setTimeout(() => finalMsg.classList.add("show"), 100);
   createConfetti();
